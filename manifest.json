@@ -1,0 +1,14 @@
+{
+  "name": "maji merge",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "description": "",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*/pull*"],
+      "js": ["src/content.js"],
+      "all_frames": false
+    }
+  ]
+}
