@@ -1,8 +1,8 @@
 {
-  "name": "maji merge",
+  "name": "Maji Merge",
   "version": "0.0.1",
   "manifest_version": 3,
-  "description": "GitHubのPRのマージボタンに確認を挟んでくれる君。マジでマージする？",
+  "description": "GitHubのPRのマージボタンに確認を挟んでくれる君。",
   "permissions": ["tabs", "scripting"],
   "host_permissions": ["https://github.com/"],
   "background": {
