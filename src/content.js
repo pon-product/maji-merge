@@ -9,8 +9,16 @@ function main() {
 }
 
 function makeBlockMerge() {
-    // PRがdraftの場合 or 既に動いている場合
-    if (document.querySelector(".branch-action-btn") || document.querySelector("#majide-merge-suruno")) {
+    const status = document.querySelector(".merging-body span.status-meta");
+
+    if (!status) {
+        return false;
+    }
+
+    const regex = new RegExp('write access');
+
+    // マージ権限がない場合 or PRがdraftの場合 or 既に動いている場合
+    if (regex.test(status.innerHTML) || document.querySelector(".branch-action-btn") || document.querySelector("#majide-merge-suruno")) {
         return true;
     }
 
@@ -19,10 +27,6 @@ function makeBlockMerge() {
     const mergeButton = document.querySelector(".btn-group-merge");
     const squashButton = document.querySelector(".btn-group-squash");
     const rebaseButton = document.querySelector(".btn-group-rebase");
-    
-    if (!mergeButtonField || !mergeButton || !squashButton || !rebaseButton) {
-        return false;
-    }
 
     mergeButton.disabled = true;
     squashButton.disabled = true;
