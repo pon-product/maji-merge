@@ -1,11 +1,14 @@
-let count = 0;
 main();
 
 function main() {
-    if (!makeBlockMerge() && count < 50) {
-        count++;
-        setTimeout(main, 500);
-    }
+    let count = 0;
+
+    let intervalId = setInterval(() => {
+        if (makeBlockMerge() || count > 50) {
+            clearInterval(intervalId)
+            count = 0
+        }
+    }, 500)
 }
 
 function makeBlockMerge() {

@@ -2,13 +2,10 @@
   "name": "maji merge",
   "version": "0.0.1",
   "manifest_version": 3,
-  "description": "",
-  "permissions": ["storage"],
-  "content_scripts": [
-    {
-      "matches": ["https://github.com/*/*/pull*"],
-      "js": ["src/content.js"],
-      "all_frames": false
-    }
-  ]
+  "description": "GitHubのPRのマージボタンに確認を挟んでくれる君。マジでマージする？",
+  "permissions": ["tabs", "scripting"],
+  "host_permissions": ["https://github.com/"],
+  "background": {
+    "service_worker": "src/background.js"
+  }
 }
