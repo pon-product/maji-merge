@@ -1,14 +1,18 @@
 main();
 
 function main() {
-    let count = 0;
+    const isLoggedIn = document.querySelector("body.logged-in");
+    
+    if (isLoggedIn) {
+        let count = 0;
 
-    let intervalId = setInterval(() => {
-        if (makeBlockMerge() || count > 50) {
-            clearInterval(intervalId)
-            count = 0
-        }
-    }, 500)
+        let intervalId = setInterval(() => {
+            if (makeBlockMerge() || count > 50) {
+                clearInterval(intervalId)
+                count = 0
+            }
+        }, 500)
+    }
 }
 
 function makeBlockMerge() {
