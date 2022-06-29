@@ -10,7 +10,7 @@ function main() {
         let intervalId = setInterval(() => {
             count++;
             if (isReady()) {
-                if (isNotPermitted() || (isAlreadyBlocked() && !isCachedView) || count > 50) {
+                if (isNotPermitted() || (isAlreadyBlocked() && !isCachedView) || count > 20) {
                     clearInterval(intervalId)
                     count = 0
                 } else if (isCachedView) {
