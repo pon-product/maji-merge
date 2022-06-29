@@ -2,33 +2,46 @@ main();
 
 function main() {
     const isLoggedIn = document.querySelector("body.logged-in");
-    
+
     if (isLoggedIn) {
         let count = 0;
+        let isCachedView = true;
 
         let intervalId = setInterval(() => {
-            if (makeBlockMerge() || count > 50) {
-                clearInterval(intervalId)
-                count = 0
+            count++;
+            if (isReady()) {
+                if (isNotPermitted() || (isAlreadyBlocked() && !isCachedView) || count > 50) {
+                    clearInterval(intervalId)
+                    count = 0
+                } else if (isCachedView) {
+                    if (!isAlreadyBlocked()) {
+                        makeBlockMerge()
+                        isCachedView = false;
+                    }
+                }
             }
         }, 500)
     }
 }
 
+// 必要な要素が読み込み終わっているかどうか
+function isReady() {
+    const statusNodeList = document.querySelectorAll(".branch-action-item .status-heading");
+    return (statusNodeList != null && statusNodeList.length > 0);
+}
+
+// 既に動いているかどうか
+function isAlreadyBlocked() {
+    return document.querySelector("#majide-merge-suruno") != null;
+}
+
+// マージできないPRでないか
+function isNotPermitted() {
+    const statusNodeList = document.querySelectorAll(".branch-action-item .status-heading");
+    return statusNodeList[statusNodeList.length-1].innerHTML !== 'This branch has no conflicts with the base branch when rebasing';
+}
+
 function makeBlockMerge() {
-    const status = document.querySelector(".merging-body span.status-meta");
-
-    if (!status) {
-        return false;
-    }
-
-    const regex = new RegExp('write access');
-
-    // マージ権限がない場合 or PRがdraftの場合 or 既に動いている場合
-    if (regex.test(status.innerHTML) || document.querySelector(".branch-action-btn") || document.querySelector("#majide-merge-suruno")) {
-        return true;
-    }
-
     const mergeButtonField = document.querySelector(".merge-message");
 
     const mergeButton = document.querySelector(".btn-group-merge");
@@ -51,6 +64,7 @@ function makeBlockMerge() {
     enableButtonDiv.className = "d-flex flex-justify-end";
 
     let enableButton = document.createElement("button");
+    enableButton.id = "majide-merge-suruno-button"
     enableButton.className = "btn";
     enableButton.textContent = "Enable merge button";
 
@@ -65,8 +79,8 @@ function makeBlockMerge() {
         enableButton.textContent = "Enabled!";
     };
 
+    document.querySelector("#majide-merge-suruno")?.remove()
+    document.querySelector("#majide-merge-suruno-button")?.remove()
     mergeButtonField.appendChild(caution);
     mergeButtonField.appendChild(enableButtonDiv);
-
-    return true;
 }
