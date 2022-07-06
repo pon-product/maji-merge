@@ -37,8 +37,8 @@ function isAlreadyBlocked() {
 
 // マージできないPRでないか
 function isNotPermitted() {
-    const statusNodeList = document.querySelectorAll(".branch-action-item .status-heading");
-    return statusNodeList[statusNodeList.length-1].innerHTML !== 'This branch has no conflicts with the base branch when rebasing';
+    const status = document.querySelector(".merging-body .status-meta");
+    return !status.textContent.trim().endsWith('can be performed automatically.');
 }
 
 function makeBlockMerge() {
