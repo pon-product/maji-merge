@@ -1,8 +1,8 @@
 {
   "name": "Maji Merge for GitHub",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "manifest_version": 3,
-  "description": "GitHubのPull Request内マージボタンに確認を挟んでくれる君。",
+  "description": "GitHubのPull Request内マージボタンに確認を挟んでくれる君",
   "permissions": ["scripting"],
   "host_permissions": ["https://github.com/"],
   "background": {
