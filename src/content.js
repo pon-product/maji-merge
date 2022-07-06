@@ -38,7 +38,7 @@ function isAlreadyBlocked() {
 // マージできないPRでないか
 function isNotPermitted() {
     const status = document.querySelector(".merging-body .status-meta");
-    return !status.textContent.trim().endsWith('can be performed automatically.');
+    return status?.textContent.trim().endsWith('can be performed automatically.') !== true;
 }
 
 function makeBlockMerge() {
@@ -47,6 +47,10 @@ function makeBlockMerge() {
     const mergeButton = document.querySelector(".btn-group-merge");
     const squashButton = document.querySelector(".btn-group-squash");
     const rebaseButton = document.querySelector(".btn-group-rebase");
+
+    const mergeDisabledAlready = mergeButton.disabled;
+    const squashDisabledAlready = squashButton.disabled;
+    const rebaseDisabledAlready = rebaseButton.disabled;
 
     mergeButton.disabled = true;
     squashButton.disabled = true;
@@ -71,9 +75,15 @@ function makeBlockMerge() {
     enableButtonDiv.appendChild(enableButton);
 
     enableButton.onclick = () => {
-        mergeButton.disabled = false;
-        squashButton.disabled = false;
-        rebaseButton.disabled = false;
+        if (!mergeDisabledAlready) {
+            mergeButton.disabled = false;
+        }
+        if (!squashDisabledAlready) {
+            squashButton.disabled = false;
+        }
+        if (!rebaseDisabledAlready) {
+            rebaseButton.disabled = false;
+        }
 
         enableButton.disabled = true;
         enableButton.textContent = "Enabled!";
