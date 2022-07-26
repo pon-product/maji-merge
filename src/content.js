@@ -3,24 +3,8 @@ main();
 function main() {
     const isLoggedIn = document.querySelector("body.logged-in");
 
-    if (isLoggedIn) {
-        let count = 0;
-        let isCachedView = true;
-
-        let intervalId = setInterval(() => {
-            count++;
-            if (isReady()) {
-                if (isNotPermitted() || (isAlreadyBlocked() && !isCachedView) || count > 20) {
-                    clearInterval(intervalId)
-                    count = 0
-                } else if (isCachedView) {
-                    if (!isAlreadyBlocked()) {
-                        makeBlockMerge()
-                        isCachedView = false;
-                    }
-                }
-            }
-        }, 500)
+    if (isLoggedIn && isReady() && !isNotPermitted() && !isAlreadyBlocked()) {
+        makeBlockMerge()
     }
 }
 
