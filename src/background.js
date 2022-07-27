@@ -5,7 +5,7 @@ chrome.tabs.onUpdated.addListener(function (_, info, tab) {
   if (info.status) {
     if (regex.test(tab.url)) {
       if (info.status === 'complete' && !isObserved(tab.id)) {
-        observedTabIdList[tab.id] = observe(tab.id);
+        observe(tab.id);
       }
     } else {
       clearObserved(tab.id);
@@ -15,7 +15,6 @@ chrome.tabs.onUpdated.addListener(function (_, info, tab) {
 
 chrome.tabs.onRemoved.addListener(function (tabId, _) {
   clearObserved(tabId);
-  console.log(observedTabIdList);
 });
 
 function isObserved(tabId) {
@@ -30,7 +29,7 @@ function clearObserved(tabId) {
 }
 
 function observe(tabId) {
-  return setInterval(() => {
+  observedTabIdList[tabId] = setInterval(() => {
     chrome.scripting.executeScript({
       target: { tabId: tabId, allFrames: false },
       files: ['./src/content.js'],

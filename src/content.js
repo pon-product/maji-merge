@@ -11,7 +11,7 @@ function main() {
 // 必要な要素が読み込み終わっているかどうか
 function isReady() {
     const statusNodeList = document.querySelectorAll(".branch-action-item .status-heading");
-    return (statusNodeList != null && statusNodeList.length > 0);
+    return statusNodeList?.length > 0 === true;
 }
 
 // 既に動いているかどうか
@@ -32,6 +32,13 @@ function makeBlockMerge() {
     const squashButton = document.querySelector(".btn-group-squash");
     const rebaseButton = document.querySelector(".btn-group-rebase");
 
+    const baseRef = document.querySelector("span.base-ref");
+    const headRef = document.querySelector("span.head-ref");
+
+    if (!mergeButtonField || !mergeButton || !squashButton || !rebaseButton || !baseRef || !headRef) {
+        return
+    }
+
     const mergeDisabledAlready = mergeButton.disabled;
     const squashDisabledAlready = squashButton.disabled;
     const rebaseDisabledAlready = rebaseButton.disabled;
@@ -39,9 +46,6 @@ function makeBlockMerge() {
     mergeButton.disabled = true;
     squashButton.disabled = true;
     rebaseButton.disabled = true;
-
-    const baseRef = document.querySelector("span.base-ref");
-    const headRef = document.querySelector("span.head-ref");
 
     let caution = document.createElement("div");
     caution.id = "majide-merge-suruno"
@@ -73,8 +77,6 @@ function makeBlockMerge() {
         enableButton.textContent = "Enabled!";
     };
 
-    document.querySelector("#majide-merge-suruno")?.remove()
-    document.querySelector("#majide-merge-suruno-button")?.remove()
     mergeButtonField.appendChild(caution);
     mergeButtonField.appendChild(enableButtonDiv);
 }
